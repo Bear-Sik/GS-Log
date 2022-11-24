@@ -1,17 +1,14 @@
 package com.gslog.controller;
 
 import com.gslog.request.PostCreate;
+import com.gslog.response.PostResponse;
 import com.gslog.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @RestController
@@ -29,7 +26,7 @@ public class PostController {
 
     // 글 등록
     @PostMapping("/posts")
-    public Map<String, String> post(@RequestBody @Valid PostCreate request) throws Exception {
+    public void post(@RequestBody @Valid PostCreate request) throws Exception {
 
         /**
          * 데이터를 검증하는 이유
@@ -85,8 +82,44 @@ public class PostController {
         // 요청에 대한 처리는 Service Layer를 만들고
         // Service Layer에서 처리하도록 만든다.
 
+        /**
+         * return case
+         * 1. 저장한 데이터 Entity를 response로 응답
+         *         return postService.write(request);
+         * 2. 저장한 데이터의 primary_id를 response로 응답
+         *      -> Client에서 응답받은 primary_id를 활용해서 글 조회 API를 다시 쏴서 데이터를 받아온다.
+         *         Long postId = postService.write(request);
+         *         return Map.of("postId", postId);
+         * 3. 응답 필요 없음
+         *      -> 클라이언트에서 모든 글 데이터 context를 잘 관리함.
+         * Bad Case : 서버에서 반드시 이렇게 할겁니다 ! fix
+         *      -> 서버에서 유연하게 대응하는 것이 좋아요.
+         *      -> 한 번에 일괄적으로 잘 처리되는 케이스가 없음 -> 잘 관리하는 형태가 중요하다.
+         */
+        
         postService.write(request);
-
-        return Map.of();
     }
+
+    /**
+     * 조회 API
+     * /posts -> 글 전체 조회 (검색 + 페이징)
+     * /posts/{postId} -> 글 한개만 조회
+     */
+
+    @GetMapping("/posts")
+    public List<PostResponse> getList() {
+        return postService.getList();
+    }
+
+    @GetMapping("/posts/{postId}")
+    public PostResponse get(@PathVariable(name = "postId") Long id) {
+        PostResponse response = postService.get(id);
+
+        // title을 10글자만 출력해야한다. 라는 서비스 정책이 생기면
+        // 응답 클래스를 생성하는 것이 좋다.
+        // 엔티티에 서비스의 정책을 넣지마세요 절대 !!!
+
+        return response;
+    }
+
 }
