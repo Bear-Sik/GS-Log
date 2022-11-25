@@ -50,7 +50,11 @@ public class PostService {
     public List<PostResponse> getList(Pageable pageable) {
 //        Pageable pageable = PageRequest.of(page, 5, Sort.by("id").descending());
 
-        return postRepository.findAll(pageable).stream()
+//        return postRepository.findAll(pageable).stream()
+//                .map(PostResponse::new)
+//                .collect(Collectors.toList());
+
+        return postRepository.getList(1).stream()
                 .map(PostResponse::new)
                 .collect(Collectors.toList());
     }
