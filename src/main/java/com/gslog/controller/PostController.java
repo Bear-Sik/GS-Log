@@ -5,6 +5,7 @@ import com.gslog.response.PostResponse;
 import com.gslog.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -107,19 +108,16 @@ public class PostController {
      */
 
     @GetMapping("/posts")
-    public List<PostResponse> getList() {
-        return postService.getList();
+    public List<PostResponse> getList(Pageable pageable) {
+        return postService.getList(pageable);
     }
 
     @GetMapping("/posts/{postId}")
     public PostResponse get(@PathVariable(name = "postId") Long id) {
-        PostResponse response = postService.get(id);
-
         // title을 10글자만 출력해야한다. 라는 서비스 정책이 생기면
         // 응답 클래스를 생성하는 것이 좋다.
         // 엔티티에 서비스의 정책을 넣지마세요 절대 !!!
-
-        return response;
+        return postService.get(id);
     }
 
 }

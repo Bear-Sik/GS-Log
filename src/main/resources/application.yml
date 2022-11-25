@@ -4,6 +4,14 @@ spring:
       enabled: true
       path: /h2-console
 
+  # 웹을 통해 요청이 들어올 경우 페이지를 -1 해줌
+  # ex) 1페이지 요청 시 0페이지의 값들을 보내줌
+  data:
+    web:
+      pageable:
+        one-indexed-parameters: true
+        default-page-size: 5
+
   datasource:
     url: jdbc:h2:mem:gslog
     username: sa
