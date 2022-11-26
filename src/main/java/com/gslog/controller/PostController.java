@@ -1,11 +1,11 @@
 package com.gslog.controller;
 
 import com.gslog.request.PostCreate;
+import com.gslog.request.PostSearch;
 import com.gslog.response.PostResponse;
 import com.gslog.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -108,8 +108,8 @@ public class PostController {
      */
 
     @GetMapping("/posts")
-    public List<PostResponse> getList(Pageable pageable) {
-        return postService.getList(pageable);
+    public List<PostResponse> getList(@ModelAttribute PostSearch postSearch) {
+        return postService.getList(postSearch);
     }
 
     @GetMapping("/posts/{postId}")

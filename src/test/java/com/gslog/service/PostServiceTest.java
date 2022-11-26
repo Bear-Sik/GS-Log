@@ -3,6 +3,7 @@ package com.gslog.service;
 import com.gslog.domain.Post;
 import com.gslog.repository.PostRepository;
 import com.gslog.request.PostCreate;
+import com.gslog.request.PostSearch;
 import com.gslog.response.PostResponse;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,7 +79,7 @@ class PostServiceTest {
     void test3() {
 
         // given
-        List<Post> requestPosts = IntStream.range(1, 20)
+        List<Post> requestPosts = IntStream.range(1, 21)
                 .mapToObj(i -> {
                     return Post.builder()
                             .title("제목 - " + i)
@@ -89,14 +90,17 @@ class PostServiceTest {
 
         postRepository.saveAll(requestPosts);
 
-        Pageable pageable = PageRequest.of(0, 5, Sort.by("id").descending());
+        PostSearch postSearch = PostSearch.builder()
+                .page(1)
+                .size(10)
+                .build();
 
         // when
-        List<PostResponse> posts = postService.getList(pageable);
+        List<PostResponse> posts = postService.getList(postSearch);
 
         // then
         assertEquals(10L, posts.size());
-        assertEquals("제목 - 1", posts.get(0).getTitle());
-        assertEquals("제목 - 5", posts.get(4).getTitle());
+        assertEquals("제목 - 20", posts.get(0).getTitle());
+        assertEquals("제목 - 16", posts.get(4).getTitle());
     }
 }
