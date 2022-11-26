@@ -3,6 +3,7 @@ package com.gslog.service;
 import com.gslog.domain.Post;
 import com.gslog.repository.PostRepository;
 import com.gslog.request.PostCreate;
+import com.gslog.request.PostEdit;
 import com.gslog.request.PostSearch;
 import com.gslog.response.PostResponse;
 import org.junit.jupiter.api.*;
@@ -102,5 +103,59 @@ class PostServiceTest {
         assertEquals(10L, posts.size());
         assertEquals("제목 - 20", posts.get(0).getTitle());
         assertEquals("제목 - 16", posts.get(4).getTitle());
+    }
+
+    @Test
+    @DisplayName("글 제목 수정")
+    void test4() {
+
+        // given
+
+        Post post = Post.builder()
+                .title("민광식입니다.")
+                .content("테스트입니다 ^^")
+                .build();
+
+        postRepository.save(post);
+
+        PostEdit postEdit = PostEdit.builder()
+                .title("민광식아닙니다.")
+                .build();
+
+        // when
+        postService.edit(post.getId(), postEdit);
+
+        // then
+        Post changedPost = postRepository.findById(post.getId())
+                .orElseThrow(() -> new RuntimeException("글이 존재하지 않습니다. id = " + post.getId()));
+        Assertions.assertEquals("민광식아닙니다.", changedPost.getTitle());
+        Assertions.assertEquals("테스트입니다 ^^", changedPost.getContent());
+    }
+
+    @Test
+    @DisplayName("글 내용 수정")
+    void test5() {
+
+        // given
+
+        Post post = Post.builder()
+                .title("민광식입니다.")
+                .content("테스트입니다 ^^")
+                .build();
+
+        postRepository.save(post);
+
+        PostEdit postEdit = PostEdit.builder()
+                .content("아닙니다.")
+                .build();
+
+        // when
+        postService.edit(post.getId(), postEdit);
+
+        // then
+        Post changedPost = postRepository.findById(post.getId())
+                .orElseThrow(() -> new RuntimeException("글이 존재하지 않습니다. id = " + post.getId()));
+        Assertions.assertEquals("민광식입니다.", changedPost.getTitle());
+        Assertions.assertEquals("아닙니다.", changedPost.getContent());
     }
 }

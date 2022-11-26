@@ -1,6 +1,7 @@
 package com.gslog.controller;
 
 import com.gslog.request.PostCreate;
+import com.gslog.request.PostEdit;
 import com.gslog.request.PostSearch;
 import com.gslog.response.PostResponse;
 import com.gslog.service.PostService;
@@ -118,6 +119,11 @@ public class PostController {
         // 응답 클래스를 생성하는 것이 좋다.
         // 엔티티에 서비스의 정책을 넣지마세요 절대 !!!
         return postService.get(id);
+    }
+
+    @PatchMapping("/posts/{postId}")
+    public void edit(@PathVariable Long postId, @RequestBody @Valid PostEdit request) {
+        postService.edit(postId, request);
     }
 
 }

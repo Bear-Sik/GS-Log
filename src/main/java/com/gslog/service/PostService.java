@@ -1,13 +1,16 @@
 package com.gslog.service;
 
 import com.gslog.domain.Post;
+import com.gslog.domain.PostEditor;
 import com.gslog.repository.PostRepository;
 import com.gslog.request.PostCreate;
+import com.gslog.request.PostEdit;
 import com.gslog.request.PostSearch;
 import com.gslog.response.PostResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -57,5 +60,23 @@ public class PostService {
         return postRepository.getList(postSearch).stream()
                 .map(PostResponse::new)
                 .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void edit(Long id, PostEdit postEdit) {
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 글입니다."));
+
+        PostEditor.PostEditorBuilder editorBuilder = post.toEditor();
+
+        if (postEdit.getTitle() != null) {
+            editorBuilder.title(postEdit.getTitle());
+        }
+
+        if (postEdit.getContent() != null) {
+            editorBuilder.content(postEdit.getContent());
+        }
+
+        post.edit(editorBuilder.build());
     }
 }
