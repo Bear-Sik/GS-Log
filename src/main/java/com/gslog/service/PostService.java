@@ -51,12 +51,6 @@ public class PostService {
     // DB -> 애플리케이션 서버로 전달하는 시간, 트래픽 비용 등이 많이  발생할 수 있다.
 
     public List<PostResponse> getList(PostSearch postSearch) {
-//        Pageable pageable = PageRequest.of(page, 5, Sort.by("id").descending());
-
-//        return postRepository.findAll(pageable).stream()
-//                .map(PostResponse::new)
-//                .collect(Collectors.toList());
-
         return postRepository.getList(postSearch).stream()
                 .map(PostResponse::new)
                 .collect(Collectors.toList());
@@ -67,15 +61,16 @@ public class PostService {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 글입니다."));
 
+        
+        /**
+         * PostEditor를 사용한 이유
+         * 1. 필드가 늘어날 경우 유지보수 힘듦
+         * 2. 도메인 내에서 수정할 수 있는 필드를 제한할 경우 용이
+         */
         PostEditor.PostEditorBuilder editorBuilder = post.toEditor();
 
-        if (postEdit.getTitle() != null) {
-            editorBuilder.title(postEdit.getTitle());
-        }
-
-        if (postEdit.getContent() != null) {
-            editorBuilder.content(postEdit.getContent());
-        }
+        editorBuilder.title(postEdit.getTitle());
+        editorBuilder.content(postEdit.getContent());
 
         post.edit(editorBuilder.build());
     }
