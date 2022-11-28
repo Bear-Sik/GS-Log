@@ -1,4 +1,4 @@
-package com.gslog.request;
+package com.gslog.api.request;
 
 import lombok.Builder;
 import lombok.Getter;

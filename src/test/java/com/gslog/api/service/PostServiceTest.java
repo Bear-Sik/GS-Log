@@ -1,17 +1,14 @@
-package com.gslog.service;
+package com.gslog.api.service;
 
-import com.gslog.domain.Post;
-import com.gslog.repository.PostRepository;
-import com.gslog.request.PostCreate;
-import com.gslog.request.PostEdit;
-import com.gslog.request.PostSearch;
-import com.gslog.response.PostResponse;
+import com.gslog.api.domain.Post;
+import com.gslog.api.repository.PostRepository;
+import com.gslog.api.request.PostCreate;
+import com.gslog.api.request.PostEdit;
+import com.gslog.api.request.PostSearch;
+import com.gslog.api.response.PostResponse;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 
 import java.util.List;
 import java.util.stream.Collectors;

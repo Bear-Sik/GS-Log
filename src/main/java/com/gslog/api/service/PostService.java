@@ -1,12 +1,12 @@
-package com.gslog.service;
+package com.gslog.api.service;
 
-import com.gslog.domain.Post;
-import com.gslog.domain.PostEditor;
-import com.gslog.repository.PostRepository;
-import com.gslog.request.PostCreate;
-import com.gslog.request.PostEdit;
-import com.gslog.request.PostSearch;
-import com.gslog.response.PostResponse;
+import com.gslog.api.domain.Post;
+import com.gslog.api.domain.PostEditor;
+import com.gslog.api.repository.PostRepository;
+import com.gslog.api.request.PostCreate;
+import com.gslog.api.request.PostEdit;
+import com.gslog.api.request.PostSearch;
+import com.gslog.api.response.PostResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

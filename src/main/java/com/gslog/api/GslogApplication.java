@@ -1,4 +1,4 @@
-package com.gslog;
+package com.gslog.api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

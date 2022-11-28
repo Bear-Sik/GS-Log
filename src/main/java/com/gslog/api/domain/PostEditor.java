@@ -1,4 +1,4 @@
-package com.gslog.domain;
+package com.gslog.api.domain;
 
 import lombok.Builder;
 import lombok.Getter;

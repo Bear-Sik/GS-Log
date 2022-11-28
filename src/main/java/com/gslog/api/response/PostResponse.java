@@ -1,6 +1,6 @@
-package com.gslog.response;
+package com.gslog.api.response;
 
-import com.gslog.domain.Post;
+import com.gslog.api.domain.Post;
 import lombok.Builder;
 import lombok.Getter;
 

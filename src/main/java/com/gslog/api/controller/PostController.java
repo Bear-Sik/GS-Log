@@ -1,10 +1,10 @@
-package com.gslog.controller;
+package com.gslog.api.controller;
 
-import com.gslog.request.PostCreate;
-import com.gslog.request.PostEdit;
-import com.gslog.request.PostSearch;
-import com.gslog.response.PostResponse;
-import com.gslog.service.PostService;
+import com.gslog.api.request.PostCreate;
+import com.gslog.api.request.PostEdit;
+import com.gslog.api.request.PostSearch;
+import com.gslog.api.response.PostResponse;
+import com.gslog.api.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;

@@ -1,7 +1,7 @@
-package com.gslog.repository;
+package com.gslog.api.repository;
 
-import com.gslog.domain.Post;
-import com.gslog.request.PostSearch;
+import com.gslog.api.domain.Post;
+import com.gslog.api.request.PostSearch;
 
 import java.util.List;
 

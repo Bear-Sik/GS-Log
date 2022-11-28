@@ -1,10 +1,10 @@
-package com.gslog.controller;
+package com.gslog.api.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gslog.domain.Post;
-import com.gslog.repository.PostRepository;
-import com.gslog.request.PostCreate;
-import com.gslog.request.PostEdit;
+import com.gslog.api.domain.Post;
+import com.gslog.api.repository.PostRepository;
+import com.gslog.api.request.PostCreate;
+import com.gslog.api.request.PostEdit;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

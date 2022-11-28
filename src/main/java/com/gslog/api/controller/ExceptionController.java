@@ -1,6 +1,6 @@
-package com.gslog.controller;
+package com.gslog.api.controller;
 
-import com.gslog.response.ErrorResponse;
+import com.gslog.api.response.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;

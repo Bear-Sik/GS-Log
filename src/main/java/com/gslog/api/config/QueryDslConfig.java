@@ -1,4 +1,4 @@
-package com.gslog.config;
+package com.gslog.api.config;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.context.annotation.Bean;
