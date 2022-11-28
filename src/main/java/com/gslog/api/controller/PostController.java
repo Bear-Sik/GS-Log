@@ -98,7 +98,9 @@ public class PostController {
          *      -> 서버에서 유연하게 대응하는 것이 좋아요.
          *      -> 한 번에 일괄적으로 잘 처리되는 케이스가 없음 -> 잘 관리하는 형태가 중요하다.
          */
-        
+
+        request.validate();
+
         postService.write(request);
     }
 

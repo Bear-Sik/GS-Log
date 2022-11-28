@@ -98,7 +98,6 @@ class PostControllerTest {
                 .content("내용입니다")
                 .build();
 
-        ObjectMapper objectMapper = new ObjectMapper(); // ObjectMapper는 실무에서 상당히 많이 사용하므로 많이 사용해보세요
         String json = objectMapper.writeValueAsString(request);
 
         // when
@@ -258,5 +257,66 @@ class PostControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print());
     }
+
+    @Test
+    @DisplayName("존재하지 않는 게시글 조회")
+    void test9() throws Exception {
+        // expected
+        mockMvc.perform(get("/posts/{postId}", 1L)
+                        .contentType(APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("존재하지 않는 게시글 수정")
+    void test10() throws Exception {
+
+        // given
+        PostEdit postEdit = PostEdit.builder()
+                .title("민광식아닙니다.")
+                .content("테스트입니다 ^^")
+                .build();
+
+
+        // expected
+        mockMvc.perform(patch("/posts/{postId}", 1L)
+                        .contentType(APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(postEdit)))
+                .andExpect(status().isNotFound())
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("존재하지 않는 게시글 삭제")
+    void test11() throws Exception {
+        // expected
+        mockMvc.perform(delete("/posts/{postId}", 1L)
+                        .contentType(APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("게시글 작성 시 제목에 비속어가 포함될 수 없다.")
+    void test12() throws Exception {
+        // given
+        PostCreate request = PostCreate.builder()
+                .title("나는 바보입니다.")
+                .content("내용입니다")
+                .build();
+
+        String json = objectMapper.writeValueAsString(request);
+
+        // expcted
+        mockMvc.perform(post("/posts")
+                        .contentType(APPLICATION_JSON)
+                        .content(json))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value("400"))
+                .andExpect(jsonPath("$.message").value("잘못된 요청입니다."))
+                .andDo(print());    // Test에 대한 Summary를 출력하고싶을 때 추가
+    }
+
 
 }

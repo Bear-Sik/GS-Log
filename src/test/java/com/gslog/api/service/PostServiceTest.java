@@ -1,5 +1,6 @@
 package com.gslog.api.service;
 
+import com.gslog.api.Exception.PostNotFound;
 import com.gslog.api.domain.Post;
 import com.gslog.api.repository.PostRepository;
 import com.gslog.api.request.PostCreate;
@@ -199,5 +200,65 @@ class PostServiceTest {
 
         // then
         Assertions.assertEquals(0, postRepository.count());
+    }
+
+    @Test
+    @DisplayName("글 1개 - 조회 실패")
+    void test8() {
+
+        // given
+        Post psot = Post.builder()
+                .title("foo")
+                .content("bar")
+                .build();
+        postRepository.save(psot);
+
+
+        // expected
+        Assertions.assertThrows(PostNotFound.class, () -> {
+            postService.get(psot.getId() + 1L);
+        });
+    }
+
+    @Test
+    @DisplayName("게시글 삭제 - 조회 실패")
+    void test9() {
+
+        // given
+        Post post = Post.builder()
+                .title("민광식입니다.")
+                .content("테스트입니다 ^^")
+                .build();
+
+        postRepository.save(post);
+
+        // expected
+        assertThrows(PostNotFound.class, () -> {
+            postService.delete(post.getId() + 1L);
+        });
+    }
+
+    @Test
+    @DisplayName("글 내용 수정 - 조회 실패")
+    void test10() {
+
+        // given
+        Post post = Post.builder()
+                .title("민광식입니다.")
+                .content("테스트입니다 ^^")
+                .build();
+
+        postRepository.save(post);
+
+        PostEdit postEdit = PostEdit.builder()
+                .title(null)
+                .content("아닙니다.")
+                .build();
+
+        // when
+        assertThrows(PostNotFound.class, () -> {
+            postService.edit(post.getId() + 1L, postEdit);
+        });
+
     }
 }

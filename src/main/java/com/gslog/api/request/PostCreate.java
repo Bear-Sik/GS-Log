@@ -1,5 +1,6 @@
 package com.gslog.api.request;
 
+import com.gslog.api.Exception.InvalidRequest;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,6 +31,12 @@ public class PostCreate {
     public PostCreate(String title, String content) {
         this.title = title;
         this.content = content;
+    }
+
+    public void validate() {
+        if (title.contains("바보")) {
+            throw new InvalidRequest("title", "제목에 비속어가 포함될 수 없습니다.");
+        }
     }
 }
 
