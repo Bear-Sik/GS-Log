@@ -78,7 +78,6 @@ class PostControllerTest {
                 .content("내용입니다")
                 .build();
         
-        ObjectMapper objectMapper = new ObjectMapper(); // ObjectMapper는 실무에서 상당히 많이 사용하므로 많이 사용해보세요
         String json = objectMapper.writeValueAsString(request);
 
         // when
